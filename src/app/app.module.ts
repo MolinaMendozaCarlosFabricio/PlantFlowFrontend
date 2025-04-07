@@ -11,6 +11,7 @@ import { NavBarComponent } from "./presentation/shared/nav-bar/nav-bar.component
 import { UserModule } from './presentation/user/user.module';
 import { AuthModule } from './presentation/auth/auth.module';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { AdminModule } from './presentation/admin/admin.module';
 
 
 
@@ -28,6 +29,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
     FormsModule,
     AuthModule,
     NavBarComponent,
+    AdminModule,
     NgxEchartsModule.forRoot({ echarts: () => import('echarts') }),
 ],
   providers: [],

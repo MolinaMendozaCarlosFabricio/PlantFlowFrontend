@@ -1,11 +1,13 @@
 import { Observable } from "rxjs";
 import { DeviceModel } from "../../../domain/models/Device/device.model";
-import { ResponseDevice } from "./entities/Device";
+import { ResponseDevice, ResponseDeviceCreated } from "./entities/Device";
 import { DeviceRepository } from "../../../domain/repositories/Device/device.repository"; 
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { DeviceGetByIdRepositoryMapper } from "./mappers/device-getById-repository-mapper";
+import { DeviceToAdd } from "../../../domain/models/Device/device-to-add.model";
+import { DeviceCreatedRepositoryMapper } from "./mappers/device-create-repository-mapper";
 
 @Injectable({
   providedIn: "root",
@@ -18,6 +20,7 @@ export class DeviceImplementationRepository extends DeviceRepository {
   }
   
   private deviceGetByIdMapper = new DeviceGetByIdRepositoryMapper();
+  private deviceCreateMapper = new DeviceCreatedRepositoryMapper();
 
   getDeviceByID(id: string): Observable<DeviceModel> {
     return this.http
@@ -27,5 +30,15 @@ export class DeviceImplementationRepository extends DeviceRepository {
           return this.deviceGetByIdMapper.mapFrom(response); 
         })
       );
+  }
+
+  override createDevice(device: DeviceToAdd): Observable<DeviceToAdd> {
+      return this.http
+        .post<ResponseDeviceCreated>(`${this.url}/`, device)
+        .pipe(
+          map((response) => {
+            return this.deviceCreateMapper.mapFrom(response)
+          })
+        )
   }
 }

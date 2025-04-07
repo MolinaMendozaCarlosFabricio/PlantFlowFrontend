@@ -23,3 +23,36 @@ export interface DeviceAttributes {
     status: number;
   }
   
+  export interface DeviceAttributes {
+    ManufacturingDate :string
+  }
+  
+  export interface type {
+    Self :string
+  }
+  
+  export interface ModelDeviceRelationship {
+    Links: {
+      Self    :string
+      Related :string
+    }
+    Data: {
+      Type :string
+      ID   :string
+    }
+  }
+  
+  export interface Relationships {
+    ModelDevice :ModelDeviceRelationship
+  }
+
+  export interface ResponseDeviceCreated {
+    Type          :string
+    ID            :string
+    Attributes    :DeviceAttributes
+    Relationships :Relationships
+    Links         :DeviceLinks
+    Status 		    :number
+  }
+  
+  

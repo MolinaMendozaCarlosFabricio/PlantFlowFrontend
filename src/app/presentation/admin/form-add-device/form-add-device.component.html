@@ -1,0 +1,15 @@
+<main>
+    <h3>Registrar dispositivo</h3>
+
+    <label for="">ID del producto</label>
+    <input [(ngModel)]="newDevice.Id" type="text">
+    <label for=""></label>
+    <input [(ngModel)]="newDevice.ManufacturingDate" type="date">
+    <label>Modelo</label>
+    <select [ngModel]="newDevice.IdModelDevice">
+        <option >Sin dispositivo</option>
+        <option [value]="1" >KEV123</option>
+    </select>
+
+    <button (click)="add()">Agregar</button>
+</main>
