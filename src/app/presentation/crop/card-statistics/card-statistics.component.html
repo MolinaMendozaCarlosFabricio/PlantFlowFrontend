@@ -1,60 +1,66 @@
-<div class="stats-container  text-white p-6 rounded-lg">
-    <div class="grid grid-cols-2 gap-4 mb-4">
-        <div class="stat-card graph-card p-6 rounded-lg flex flex-col items-center">
-            <h2 class="text-lg font-bold">TEMPERATURA</h2>
-            <img src="/assets/crops/temperature.svg" alt="Temperatura" class="w-20 h-20 mt-3">
-            <p class="text-3xl font-semibold mt-3">25°C</p>
-            <div class="w-full bg-gray-700 h-2 mt-2 rounded">
-                <div class="bg-white h-2 w-1/3 rounded"></div>
-            </div>
-        </div>
-        
-        <div class="stat-card graph-card p-6 rounded-lg flex flex-col items-center">
-            <h2 class="text-lg font-bold">HUMEDAD</h2>
-            <img src="/assets/crops/humedad.svg" alt="Humedad" class="w-20 h-20 mt-3">
-            <p class="text-3xl font-semibold mt-3">37%</p>
-            <div class="w-full bg-gray-700 h-2 mt-2 rounded">
-                <div class="bg-white h-2 w-2/5 rounded"></div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="grid grid-cols-2 gap-4 mb-4">
-        <div class="stat-card graph-card p-6 rounded-lg flex flex-col items-center">
-            <h2 class="text-lg font-bold">CALIDAD DE AIRE</h2>
-            <img src="/assets/crops/aire.svg" alt="Calidad del aire" class="w-20 h-20 mt-3">
-            <p class="text-lg font-semibold mt-3">CALIDAD: Moderada</p>
-            <div class="flex">
-                <img src="/assets/crops/aire1.svg" alt="Calidad del aire" class="w-16 h-16 mt-3">
-                <img src="/assets/crops/aire2.svg" alt="Calidad del aire" class="w-16 h-16 mt-3">
-                <img src="/assets/crops/aire3.svg" alt="Calidad del aire" class="w-16 h-16 mt-3">
-            </div>
-        </div>
-        
-        <div class="stat-card graph-card p-6 rounded-lg flex flex-col items-center">
-            <h2 class="text-lg font-bold">RADIACIÓN SOLAR</h2>
-            <img src="/assets/crops/radiacion.svg" alt="Radiación solar" class="w-20 h-20 mt-3">
-            <p class="text-3xl font-semibold mt-3">458 Wats</p>
-        </div>
-    </div>
-    
-    <div class="graph-card p-6 rounded-lg flex flex-col items-center">
+<div class="stats-container text-white p-6 rounded-lg" *ngIf="obtenerUltimaMedicion() as ultima">
+  <div class="grid grid-cols-2 gap-4 mb-4">
+    <!-- TEMPERATURA -->
+    <div class="stat-card graph-card p-6 rounded-lg flex flex-col items-center">
+      <h2 class="text-lg font-bold">TEMPERATURA</h2>
+      <img src="/assets/crops/temperature.svg" alt="Temperatura" class="w-20 h-20 mt-3">
+      <p class="text-3xl font-semibold mt-3">{{ ultima.temp }}°C</p>
+      <div class="w-full bg-gray-700 h-2 mt-2 rounded">
+        <div class="bg-white h-2 rounded" [style.width.%]="(ultima.temp || 0) * 2"></div>
+      </div>
+      <!-- Gráfica temperatura -->
+      <div class="graph-card p-6 rounded-lg flex flex-col items-center mt-4 w-full">
         <h2 class="text-lg font-bold">GRÁFICA TEMPERATURA</h2>
-        <p-chart type="line" [data]="chartDataTemp" [options]="chartOptionsTemp"></p-chart>
+        <p-chart type="line" [data]="chartDataTemp" [options]="chartOptionsTemp" style="width: 100%"></p-chart>
+      </div>
     </div>
 
-    <div class="graph-card p-6 rounded-lg flex flex-col items-center">
+    <!-- HUMEDAD -->
+    <div class="stat-card graph-card p-6 rounded-lg flex flex-col items-center">
+      <h2 class="text-lg font-bold">HUMEDAD</h2>
+      <img src="/assets/crops/humedad.svg" alt="Humedad" class="w-20 h-20 mt-3">
+      <p class="text-3xl font-semibold mt-3">{{ ultima.humedity }}%</p>
+      <div class="w-full bg-gray-700 h-2 mt-2 rounded">
+        <div class="bg-white h-2 rounded" [style.width.%]="(ultima.humedity || 0)"></div>
+      </div>
+      <!-- Gráfica humedad -->
+      <div class="graph-card p-6 rounded-lg flex flex-col items-center mt-4 w-full">
         <h2 class="text-lg font-bold">GRÁFICA HUMEDAD</h2>
-        <p-chart type="line" [data]="chartDataHum" [options]="chartOptionsHum"></p-chart>
+        <p-chart type="line" [data]="chartDataHum" [options]="chartOptionsHum" style="width: 100%"></p-chart>
+      </div>
     </div>
+  </div>
 
-    <div class="graph-card p-6 rounded-lg flex flex-col items-center">
+  <div class="grid grid-cols-2 gap-4 mb-4">
+    <!-- CALIDAD DEL AIRE -->
+    <div class="stat-card graph-card p-6 rounded-lg flex flex-col items-center">
+      <h2 class="text-lg font-bold">CALIDAD DE AIRE</h2>
+      <img src="/assets/crops/aire.svg" alt="Calidad del aire" class="w-20 h-20 mt-3">
+      <p class="text-lg font-semibold mt-3">
+        CALIDAD: {{ ultima.air > 250 ? 'Mala' : ultima.air > 150 ? 'Moderada' : 'Buena' }}
+      </p>
+      <div class="flex space-x-2 mt-3">
+        <img *ngIf="ultima.air <= 150" src="/assets/crops/aire1.svg" class="w-16 h-16">
+        <img *ngIf="ultima.air > 150 && ultima.air <= 250" src="/assets/crops/aire2.svg" class="w-16 h-16">
+        <img *ngIf="ultima.air > 250" src="/assets/crops/aire3.svg" class="w-16 h-16">
+      </div>
+      <!-- Gráfica aire -->
+      <div class="graph-card p-6 rounded-lg flex flex-col items-center mt-4 w-full">
         <h2 class="text-lg font-bold">GRÁFICA CALIDAD DEL AIRE</h2>
-        <p-chart type="line" [data]="chartDataAir" [options]="chartOptionsAir"></p-chart>
+        <p-chart type="line" [data]="chartDataAir" [options]="chartOptionsAir" style="width: 100%"></p-chart>
+      </div>
     </div>
 
-    <div class="graph-card p-6 rounded-lg flex flex-col items-center">
+    <!-- RADIACIÓN SOLAR -->
+    <div class="stat-card graph-card p-6 rounded-lg flex flex-col items-center">
+      <h2 class="text-lg font-bold">RADIACIÓN SOLAR</h2>
+      <img src="/assets/crops/radiacion.svg" alt="Radiación solar" class="w-20 h-20 mt-3">
+      <p class="text-3xl font-semibold mt-3">{{ ultima.sun }} Wats</p>
+      <!-- Gráfica luz solar -->
+      <div class="graph-card p-6 rounded-lg flex flex-col items-center mt-4 w-full">
         <h2 class="text-lg font-bold">GRÁFICA LUZ SOLAR</h2>
-        <p-chart type="line" [data]="chartDataSun" [options]="chartOptionsSun"></p-chart>
+        <p-chart type="line" [data]="chartDataSun" [options]="chartOptionsSun" style="width: 100%"></p-chart>
+      </div>
     </div>
+  </div>
 </div>

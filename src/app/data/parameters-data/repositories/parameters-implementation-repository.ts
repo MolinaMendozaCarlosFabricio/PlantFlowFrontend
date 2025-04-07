@@ -36,4 +36,18 @@ export class ParameterImplementationRepository extends ParameterRepository {
       max_air_con: params.max_air_con,
     });
   }
+
+  registerParameters(cultivationParameters: CultivationParametersModel): Observable<CultivationParametersModel> {
+    return this.http.post<any>(this.url, cultivationParameters).pipe(
+      map((response) => ({
+        id: parseInt(response.data.id),
+        humidity_min: response.data.attributes.humidity_min,
+        humidity_max: response.data.attributes.humidity_max,
+        temp_min: response.data.attributes.temp_min,
+        temp_max: response.data.attributes.temp_max,
+        max_air_con: response.data.attributes.max_air_con,
+        min_air_con: response.data.attributes.min_air_con
+      }))
+    );
+  }
 }

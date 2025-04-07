@@ -31,7 +31,7 @@
   </div>
 
   <div  *ngIf="selectedButton === 'estadisticas'">
-    <app-card-statistics ></app-card-statistics>
+    <app-card-statistics [measurements]="measurements"></app-card-statistics>
   </div>
 
   <div  *ngIf="selectedButton === 'parametros'">

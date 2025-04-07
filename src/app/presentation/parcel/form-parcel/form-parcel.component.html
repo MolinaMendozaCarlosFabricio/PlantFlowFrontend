@@ -1,145 +1,132 @@
 <div class="container-add-parcel">
-  <form [formGroup]="formLost" (ngSubmit)="onSubmitFormParcel()"
-      class="mb-0 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
-
-      <!-- INICIO FORM PT1 -->
+    <form [formGroup]="formLost" (ngSubmit)="onSubmitFormParcel()"
+          class="mb-0 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
+  
+      <!-- PASO 1: CULTIVO Y PARÁMETROS -->
       <div *ngIf="currentStep === 1" class="form-step1">
-          <h1 class="text-center text-2xl mb-6 font-bold text-white sm:text-3xl">
-              AGREGAR UNA NUEVA PARCELA
-          </h1>
-
-          <!-- parcelName-->
-          <div>
-              <label for="parcelName" class="block mb-2 text-sm font-medium text-gray-900">Nombre de la Parcela:</label>
-              <input id="parcelName" formControlName="parcelName"
-                  class="mb-2 bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-2.5" type="text"
-                  required>
-
-              <div *ngIf="hasErrors('parcelName', 'required')" class="text-red-500 text-xs mb-2">
-                  El campo nombre de parcela es obligatorio
-              </div>
+        <h1 class="text-center text-2xl mb-6 font-bold text-white sm:text-3xl">
+          DATOS DEL CULTIVO
+        </h1>
+  
+        <!-- cropName -->
+        <div>
+          <label for="cropName" class="block mb-2 text-sm font-medium text-gray-900">Nombre del Cultivo:</label>
+          <input id="cropName" formControlName="cropName"
+                 class="mb-2 bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                 type="text" required>
+          <div *ngIf="hasErrors('cropName', 'required')" class="text-red-500 text-xs mb-2">
+            El campo nombre del cultivo es obligatorio
           </div>
-
-          <!--cropType -->
-          <div>
-              <label for="cropType" class="block mb-2 text-sm font-medium text-gray-900">Tipo de Cultivo:</label>
-              <select id="cropType" formControlName="cropType"
+        </div>
+  
+        <!-- cropType -->
+        <div>
+          <label for="cropType" class="block mb-2 text-sm font-medium text-gray-900">Tipo de Cultivo:</label>
+          <select id="cropType" formControlName="cropType"
                   class="mb-2 bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-2.5">
-                  <option *ngFor="let type of cropTypes" [value]="type">{{ type }}</option>
-              </select>
-              <div *ngIf="hasErrors('cropType', 'required')" class="text-red-500 text-xs mb-2">
-                  El campo tipo de cultivo es obligatorio
-              </div>
+            <option *ngFor="let type of cropTypes" [value]="type">{{ type }}</option>
+          </select>
+          <div *ngIf="hasErrors('cropType', 'required')" class="text-red-500 text-xs mb-2">
+            El campo tipo de cultivo es obligatorio
           </div>
-
-
-          <br>
-
-          <!-- Botones -->
-          <button type="button" class="div-submit_color button_submit block w-full rounded-lg px-5 py-3 text-sm font-medium text-white mb-5"
-              (click)="onNext()">
-              Siguiente
-          </button>
-          <button type="reset" class="div-reset_color button_back block w-full rounded-lg px-5 py-3 text-sm font-medium text-white"
-              (click)="onReset()">
-              Regresar a parcelas
-          </button>
-
-
-          <br>
-          <div class="flex justify-center mt-4">
-              <img src="/assets/FormCropParcel/dots1.svg" alt="">
+        </div>
+  
+        <!-- Parámetros -->
+        <div class="param-group">
+          <div class="param-left">
+            <label for="maxHumidity">Max Humedad:</label>
+            <input id="maxHumidity" formControlName="maxHumidity" type="number" required>
+            <div *ngIf="hasErrors('maxHumidity', 'required')" class="text-red-500 text-xs mb-2">
+              El parámetro del cultivo es obligatorio
+            </div>
           </div>
+          <div class="param-right">
+            <label for="minHumidity">Min Humedad:</label>
+            <input id="minHumidity" formControlName="minHumidity" type="number" required>
+            <div *ngIf="hasErrors('minHumidity', 'required')" class="text-red-500 text-xs mb-2">
+              El parámetro del cultivo es obligatorio
+            </div>
+          </div>
+        </div>
+  
+        <div class="param-group">
+          <div class="param-left">
+            <label for="maxTemperature">Max Temperatura:</label>
+            <input id="maxTemperature" formControlName="maxTemperature" type="number" required>
+            <div *ngIf="hasErrors('maxTemperature', 'required')" class="text-red-500 text-xs mb-2">
+              El parámetro del cultivo es obligatorio
+            </div>
+          </div>
+          <div class="param-right">
+            <label for="minTemperature">Min Temperatura:</label>
+            <input id="minTemperature" formControlName="minTemperature" type="number" required>
+            <div *ngIf="hasErrors('minTemperature', 'required')" class="text-red-500 text-xs mb-2">
+              El parámetro del cultivo es obligatorio
+            </div>
+          </div>
+        </div>
+  
+        <div class="param-group">
+          <div class="param-left">
+            <label for="maxAirQuality">Max Calidad del Aire:</label>
+            <input id="maxAirQuality" formControlName="maxAirQuality" type="number" required>
+            <div *ngIf="hasErrors('maxAirQuality', 'required')" class="text-red-500 text-xs mb-2">
+              El parámetro del cultivo es obligatorio
+            </div>
+          </div>
+        </div>
+  
+        <!-- Botones -->
+        <br><br>
+        <button type="button"
+                class="div-submit_color button_submit block w-full rounded-lg px-5 py-3 text-sm font-medium text-white mb-5"
+                (click)="onNext()">
+          Siguiente
+        </button>
+        <button type="reset"
+                class="div-reset_color button_back block w-full rounded-lg px-5 py-3 text-sm font-medium text-white"
+                (click)="onReset()">
+          Cancelar
+        </button>
+  
+        <div class="flex justify-center mt-4">
+          <img src="/assets/FormCropParcel/dots1.svg" alt="">
+        </div>
       </div>
-
-      <!-- INICIO FORM PT2 -->
+  
+      <!-- PASO 2: PARCELA -->
       <div *ngIf="currentStep === 2" class="form-step2">
-          <h1 class="text-center text-2xl mb-6 font-bold text-white sm:text-3xl">
-              DATOS DEL CULTIVO
-          </h1>
-
-          <!-- cropName -->
-          <div>
-              <label for="cropName" class="block mb-2 text-sm font-medium text-gray-900">Nombre del Cultivo:</label>
-              <input id="cropName" formControlName="cropName"
-                  class="mb-2 bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-2.5" type="text"
-                  required>
-              <div *ngIf="hasErrors('cropName', 'required')" class="text-red-500 text-xs mb-2">
-                  El campo nombre del cultivo es obligatorio
-              </div>
+        <h1 class="text-center text-2xl mb-6 font-bold text-white sm:text-3xl">
+          AGREGAR PARCELA
+        </h1>
+  
+        <!-- parcelName-->
+        <div>
+          <label for="parcelName" class="block mb-2 text-sm font-medium text-gray-900">Nombre de la Parcela:</label>
+          <input id="parcelName" formControlName="parcelName"
+                 class="mb-2 bg-gray-50 border text-gray-900 text-sm rounded-lg block w-full p-2.5" type="text"
+                 required>
+          <div *ngIf="hasErrors('parcelName', 'required')" class="text-red-500 text-xs mb-2">
+            El campo nombre de parcela es obligatorio
           </div>
-
-          <!-- Parámetros -->
-          <div class="param-group">
-              <div class="param-left">
-                  <label for="maxHumidity">Max Humedad:</label>
-                  <input id="maxHumidity" formControlName="maxHumidity" type="number" required>
-                  <div *ngIf="hasErrors('maxHumidity', 'required')" class="text-red-500 text-xs mb-2">
-                    El parámetro del cultivo es obligatorio
-                </div>
-                </div>
-              
-              <div class="param-right">
-                  <label for="minHumidity">Min Humedad:</label>
-                  <input id="minHumidity" formControlName="minHumidity" type="number" required>
-                  <div *ngIf="hasErrors('minHumidity', 'required')" class="text-red-500 text-xs mb-2">
-                    El parámetro del cultivo es obligatorio
-                </div>
-                </div>
-            
-          </div>
-
-          <div class="param-group">
-              <div class="param-left">
-                  <label for="maxTemperature">Max Temperatura:</label>
-                  <input id="maxTemperature" formControlName="maxTemperature" type="number" required>
-                  <div *ngIf="hasErrors('maxTemperature', 'required')" class="text-red-500 text-xs mb-2">
-                    El parámetro del cultivo es obligatorio
-                </div>
-                </div>
-              <div class="param-right">
-                  <label for="minTemperature">Min Temperatura:</label>
-                  <input id="minTemperature" formControlName="minTemperature" type="number" required>
-                  <div *ngIf="hasErrors('minTemperature', 'required')" class="text-red-500 text-xs mb-2">
-                    El parámetro del cultivo es obligatorio
-                </div>
-                </div>
-          </div>
-
-          <div class="param-group">
-              <div class="param-left">
-                  <label for="maxAirQuality">Max Calidad del Aire:</label>
-                  <input id="maxAirQuality" formControlName="maxAirQuality" type="number" required>
-                  <div *ngIf="hasErrors('maxAirQuality', 'required')" class="text-red-500 text-xs mb-2">
-                    El parámetro del cultivo es obligatorio
-                </div>
-                </div>
-              <div class="param-right">
-                  <label for="minAirQuality">Min Calidad del Aire:</label>
-                  <input id="minAirQuality" formControlName="minAirQuality" type="number" required>
-                  <div *ngIf="hasErrors('minAirQuality', 'required')" class="text-red-500 text-xs mb-2">
-                    El parámetro del cultivo es obligatorio
-                </div>
-                </div>
-          </div>
-
-          <br><br>
-
-          <!-- Botones -->
-          <button type="submit"
-              class="div-submit_color button_submit block w-full rounded-lg px-5 py-3 text-sm font-medium text-white mb-4">
-              Enviar
-          </button>
-          <button type="button"
-              class="div-reset_color button_back block w-full rounded-lg px-5 py-3 text-sm font-medium text-white"
-              (click)="onBack()">
-              Anterior
-          </button>
-
-          <br>
-          <div class="flex justify-center mt-4">
-            <img src="/assets/FormCropParcel/dots2.svg" alt="">
-          </div>
+        </div>
+  
+        <!-- Botones -->
+        <br><br>
+        <button type="submit"
+                class="div-submit_color button_submit block w-full rounded-lg px-5 py-3 text-sm font-medium text-white mb-4">
+          Enviar
+        </button>
+        <button type="button"
+                class="div-reset_color button_back block w-full rounded-lg px-5 py-3 text-sm font-medium text-white"
+                (click)="onBack()">
+          Anterior
+        </button>
+  
+        <div class="flex justify-center mt-4">
+          <img src="/assets/FormCropParcel/dots2.svg" alt="">
+        </div>
       </div>
-  </form>
-</div>
+    </form>
+  </div>
+  

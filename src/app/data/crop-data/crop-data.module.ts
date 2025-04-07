@@ -6,6 +6,8 @@ import { CropTypeImplementationRepository } from './repositories/cropType-implme
 import { CropRepository } from '../../domain/repositories/Crop/crop.repository';
 import { getCropByIdUseCase } from '../../domain/useCases/Crop/get-cropById.useCase';
 import { CropImplementationRepository } from './repositories/crop-implementation.repository';
+import { RegisterCropUseCase } from '../../domain/useCases/Crop/register-crop.useCase';
+
 
 const getCropTypeCaseFactory = (cropTypeRepo : CropTypeRepository) => new getCropTypeUseCase(cropTypeRepo)
 
@@ -25,10 +27,19 @@ export const getCropByIdUseCaseProvider ={
   deps: [CropRepository]
 }
 
+const registerCropCaseFactory = (cropRepo: CropRepository) => new RegisterCropUseCase(cropRepo);
+
+export const registerCropUseCaseProvider = {
+  provide: RegisterCropUseCase,
+  useFactory: registerCropCaseFactory,
+  deps: [CropRepository],
+};
+
 @NgModule({
    providers:[
     getCropTypeUseCaseProvider,
     getCropByIdUseCaseProvider,
+    registerCropUseCaseProvider,
       {provide: CropTypeRepository, useClass: CropTypeImplementationRepository},
       { provide: CropRepository, useClass: CropImplementationRepository }
     ],

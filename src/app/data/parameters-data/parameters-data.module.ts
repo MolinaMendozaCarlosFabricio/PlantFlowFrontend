@@ -5,6 +5,7 @@ import { SetParametersUseCase } from '../../domain/useCases/Parameters/set-param
 import { ParameterRepository } from '../../domain/repositories/Parameters/parameter.repository';
 import { GetParameterByIdUseCase } from '../../domain/useCases/Parameters/getById-parameters.useCase';
 import { ParameterImplementationRepository } from './repositories/parameters-implementation-repository';
+import { RegisterParametersUseCase } from '../../domain/useCases/Parameters/register-parameters.useCase';
 
 
 const setParametersCaseFactory = (parametersRepo: ParameterRepository) => new SetParametersUseCase(parametersRepo)
@@ -24,11 +25,16 @@ export const GetParameterByIdUseCaseProvider ={
 
 }
 
-
+const registerParametersFactory = (parameterRepo: ParameterRepository) =>new RegisterParametersUseCase(parameterRepo);
+export const registerParametersProvider = {
+  provide: RegisterParametersUseCase,
+  useFactory: registerParametersFactory,
+  deps: [ParameterRepository],
+};
 
 @NgModule({
   providers:[
-    setParametersUseCaseProvider, GetParameterByIdUseCaseProvider,
+    setParametersUseCaseProvider, GetParameterByIdUseCaseProvider,  registerParametersProvider,
     {provide: ParameterRepository, useClass:ParameterImplementationRepository}
   ],
   declarations: [],
